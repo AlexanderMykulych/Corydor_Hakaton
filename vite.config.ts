@@ -53,6 +53,7 @@ export default defineConfig({
       dirs: [
         'src/composables',
         'src/stores',
+        'src/components/boards'
       ],
       vueTemplate: true,
     }),

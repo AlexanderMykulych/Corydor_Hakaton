@@ -1,14 +1,19 @@
 button:
   about: About
   back: Back
-  go: GO
+  go: Start
   home: Home
   toggle_dark: Toggle dark mode
   toggle_langs: Change languages
 intro:
-  desc: Opinionated Vite Starter Template
+  logo: Hellway
+  walls: Walls
+  time: Time
+  desc: Please write the name of the first player
+  desc2: Please write the name of the second player
   dynamic-route: Demo of dynamic route
-  hi: Hi, {name}!
+  hi: Player {name}
   aka: Also known as
-  whats-your-name: What's your name?
+  whats-your-name1: Name of the first player
+  whats-your-name2: Name of the second player
 not-found: Not found

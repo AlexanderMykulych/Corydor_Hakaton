@@ -7,11 +7,21 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Cell: typeof import('./components/Cell.vue')['default']
+    copy: typeof import('./components/JugNode copy.vue')['default']
+    DefaultBoard: typeof import('./components/DefaultBoard.vue')['default']
+    EmptyNode: typeof import('./components/EmptyNode.vue')['default']
+    FakeJugNode: typeof import('./components/FakeJugNode.vue')['default']
+    FakeWallNode: typeof import('./components/FakeWallNode.vue')['default']
+    Header: typeof import('./components/Header.vue')['default']
+    JugNode: typeof import('./components/JugNode.vue')['default']
+    PlayerNode: typeof import('./components/PlayerNode.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheCounter: typeof import('./components/TheCounter.vue')['default']
     TheFooter: typeof import('./components/TheFooter.vue')['default']
     TheInput: typeof import('./components/TheInput.vue')['default']
+    WallNode: typeof import('./components/WallNode.vue')['default']
   }
 }
