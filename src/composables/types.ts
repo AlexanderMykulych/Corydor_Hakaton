@@ -1,9 +1,11 @@
 type QuoridorGame = {
-  board: Board
+  state: QuoridorGameState
 }
 
 type QuoridorGameState = {
-
+  board: Board
+  player1: Player
+  player2: Player
 }
 
 type Player = {
