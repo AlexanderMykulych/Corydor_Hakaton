@@ -1,5 +1,5 @@
 <template>
-    <div class="jug-cell" @mouseover="$emit('hover')" :style="`transform: rotate(${degrees}deg)`"></div>
+    <div class="jug-cell" @mouseover="$emit('hover')" :style="`transform: rotate(${degrees}deg)`"  @click="$emit('click')"></div>
 </template>
 
 <script setup lang="ts">

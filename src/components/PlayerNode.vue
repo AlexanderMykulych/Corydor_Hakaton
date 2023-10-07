@@ -1,6 +1,6 @@
 <template>
     <div class="player-cell" @mouseover="$emit('hover')" @click="$emit('click')">
-        <div class="frog"></div>
+        <div class="frog" :class="{isActive: cell.data.isActive}"></div>
     </div>
 </template>
 
@@ -33,5 +33,23 @@ const emits = defineEmits<{
     background-repeat: no-repeat;
     width: 100%;
     height: 100%;
+
+    animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    scale: 1;
+  }
+  50% {
+    scale: 0.8;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+.frog.isActive {
+    background-image: url("https://flexboxfroggy.com/images/frog-red.svg");
 }
 </style>

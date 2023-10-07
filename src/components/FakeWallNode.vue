@@ -1,5 +1,7 @@
 <template>
-    <div class="fake-wall-cell" @mouseover="$emit('hover')"  @click="$emit('click')"></div>
+    <div class="fake-wall-cell" @mouseover="$emit('hover')"  @click="$emit('click')">
+        <img class="rock" src="https://www.svgrepo.com/download/407352/rock.svg" alt="">
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -16,10 +18,20 @@ const emits = defineEmits<{
 
 <style scoped>
 .fake-wall-cell {
-    background-color: green;
     opacity: 0.5;
     width: 100%;
     height: 100%;
     cursor: pointer;
+    position: relative;
+}
+
+.rock {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 </style>

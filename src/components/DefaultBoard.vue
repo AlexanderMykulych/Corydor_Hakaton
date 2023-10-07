@@ -12,7 +12,7 @@ const quoridor = useQuoridor()
     <div class="board">
       <template v-for="cell in quoridor.gameBoard.value.items">
           <CellVue  :cell="cell" @hover="quoridor.actions.hover(cell)" @click="quoridor.actions.click(cell)">
-            {{ cell.index }}
+            <!-- {{ cell.index }} -->
           </CellVue>
       </template>
     </div>

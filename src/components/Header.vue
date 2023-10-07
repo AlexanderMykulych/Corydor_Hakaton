@@ -7,28 +7,49 @@ const { t } = useI18n()
 
 const quoridor = useQuoridor()
 
-const timerValue = ref(30); 
+const timer10 = ref(true);
+const timer20 = ref(false);
 
-const timer = computed(() => {
-  return timerValue.value > 0 ? `${timerValue.value} сек` : 'Час вийшов';
+const timerValue1 = ref(30); 
+const timerValue2 = ref(30); 
+
+const timer1 = computed(() => {
+  return timerValue1.value > 0 ? `${timerValue1.value} сек` : '0 сек';
 });
 
-const startTimer = () => {
+const timer2 = computed(() => {
+  return timerValue2.value > 0 ? `${timerValue2.value} сек` : '0 сек';
+});
+
+const startTimer1 = () => {
   const timerInterval = setInterval(() => {
-    if (timerValue.value > 0) {
-      timerValue.value--;
+    if (timerValue1.value > 0) {
+      timerValue1.value--;
     } else {
       clearInterval(timerInterval);
+      timerValue2.value = 30
+      startTimer2();
+      timer10.value = false
+      timer20.value = true
     }
-  }, 1000); 
-
-  
-  watchEffect(() => {
-    timerValue.value = 30; // Сброс таймера до начального значения при изменении props.name
-  });
+  }, 1000);
 };
 
-startTimer();
+const startTimer2 = () => {
+  const timerInterval = setInterval(() => {
+    if (timerValue2.value > 0) {
+      timerValue2.value--;
+    } else {
+      clearInterval(timerInterval);
+      timerValue1.value = 30
+      startTimer1();
+      timer10.value = true
+      timer20.value = false
+    }
+  }, 1000);
+};
+
+startTimer1();
 // function show() {
 //   console.log(9, quoridor.state.value.player1.walls);
 // }
@@ -51,6 +72,10 @@ watchEffect(() => {
     <p class="mt-10">
       {{ t('intro.walls') }}: {{quoridor.state.value.player1.walls}}
     </p>
+
+    <p v-if="timer10" class="mt-10">
+      {{ t('intro.time') }}: {{timer1}}
+    </p>
   </div>
 
 
@@ -66,8 +91,8 @@ watchEffect(() => {
       {{ t('intro.walls') }}: {{quoridor.state.value.player2.walls}}
     </p>
 
-    <p class="mt-10">
-      {{ t('intro.time') }}: {{timer}}
+    <p v-if="timer20" class="mt-10">
+      {{ t('intro.time') }}: {{timer2}}
     </p>
   </div>
 

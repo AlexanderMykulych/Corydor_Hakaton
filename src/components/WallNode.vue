@@ -26,7 +26,11 @@ const emits = defineEmits<{
 
 .rock {
     position: absolute;
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 </style>

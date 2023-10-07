@@ -2,7 +2,8 @@ export function useQuoridor(config: QuoridorConfig = getDefaultQuoridorConfig())
   const state = ref<QuoridorGameState>({
     board: createBoard(config),
     player1: createPlayer(config, config.player1),
-    player2: createPlayer(config, config.player1),
+    player2: createPlayer(config, config.player2),
+    activePlayer: 'player1',
   })
 
   const gameBoard = computeGameBoard(state, config)
@@ -56,10 +57,14 @@ export function getDefaultQuoridorConfig(): QuoridorConfig {
       height: 9
     },
     player1: {
-      name: 'Player1'
+      name: 'Player1',
+      x: 4,
+      y: 5,
     },
     player2: {
-      name: 'Player2'
+      name: 'Player2',
+      x: 8,
+      y: 5,
     }
   }
 }
@@ -68,8 +73,8 @@ export function createPlayer(config: QuoridorConfig, playerConfig: PlayerConfig)
   return {
     name: playerConfig.name,
     position: {
-      x: Math.floor(config.size.width / 2),
-      y: 0
+      x: playerConfig.x,
+      y: playerConfig.y,
     },
     walls: 10
   }
@@ -116,21 +121,25 @@ export function computeGameBoard(state: Ref<QuoridorGameState>, config: Quoridor
           index: fullGameIndex,
         }
       })
+    
+    const player1FullGameIndex = getFullBoardIndexByNode(state.value.player1.position, fullGameWidth)
+    const player2FullGameIndex = getFullBoardIndexByNode(state.value.player2.position, fullGameWidth)
 
-    fullGameBoard[10] = {
+    fullGameBoard[player1FullGameIndex] = {
       type: 'player-node',
-      index: 10,
-      data: state.value.player1,
+      index: player1FullGameIndex,
+      data: {
+        player: state.value.player1,
+        isActive: state.value.activePlayer === 'player1',
+      },
     }
-    fullGameBoard[46] = {
+    fullGameBoard[player2FullGameIndex] = {
       type: 'player-node',
-      index: 46,
-      data: state.value.player2,
-    }
-    fullGameBoard[144] = {
-      type: 'fake-node',
-      index: 144,
-      data: state.value.player2,
+      index: player2FullGameIndex,
+      data: {
+        player: state.value.player2,
+        isActive: state.value.activePlayer === 'player2',
+      },
     }
 
     return {
@@ -149,7 +158,7 @@ export function getFullBoardNodeByNode(node: GameNode): Position {
   }
 }
 
-export function getFullBoardIndexByNode(node: GameNode, fullGameWidth: number): number {
+export function getFullBoardIndexByNode(node: Position, fullGameWidth: number): number {
   const { x, y } = getFullBoardNodeByNode(node)
   return getFullBoardIndexByPosition({ x, y }, fullGameWidth)
 }
@@ -213,14 +222,23 @@ export function hoverItem({ gameItem, gameBoard, state }: HoverItemParam): void 
 export function clickItem({ gameItem, gameBoard, state }: ClickItemParam): void {
   const index = gameItem.index
   state.value.board.fakeWalls = []
+  state.value.board.fakeNodes = []
   console.log('click', gameItem)
   if (gameItem.type === 'fake-wall') {
     state.value.board.walls.push(...getWallOnGameItem(index, gameBoard))
   }
 
   if (gameItem.type === 'player-node') {
-    const { x, y } = getPositionByIndex(index, gameBoard)
-    
+    let { x, y } = getPositionByIndex(index, gameBoard)
+    //fix
+    y += 1
+
+    const playerType = getPlayerByPosition({ x, y }, state)
+
+    if (playerType !== state.value.activePlayer) {
+      return
+    }
+
     state.value.board.fakeNodes = [
       {
         x: x - 1,
@@ -239,15 +257,35 @@ export function clickItem({ gameItem, gameBoard, state }: ClickItemParam): void 
         y: y + 1,
       },
     ]
-
-    console.log('player-node', x, y, state.value.board.fakeNodes)
   }
+
+  if (gameItem.type === 'fake-node') {
+    let { x, y } = getPositionByIndex(index, gameBoard)
+    //fix
+    y += 1
+
+    const player = state.value.activePlayer === 'player1' ? state.value.player1 : state.value.player2
+
+    player.position = {
+      x,
+      y,
+    }
+    state.value.activePlayer = state.value.activePlayer === 'player1' ? 'player2' : 'player1'
+  }
+}
+
+function getPlayerByPosition(position: Position, state: Ref<QuoridorGameState>): 'player1' | 'player2' {
+  if (position.x === state.value.player1.position.x && position.y === state.value.player1.position.y) {
+    return 'player1'
+  }
+
+  return 'player2'
 }
 
 export function getPositionByIndex(index: number, gameBoard: Ref<GameBoard>): Position {
   const column = Math.ceil((index % gameBoard.value.fullGameWidth + 1) / 2)
   const fullRow = (Math.ceil(index / gameBoard.value.fullGameWidth) + 1)
-  const row = Math.ceil(fullRow / 2)
+  const row = Math.ceil(fullRow / 2) - 1
 
   return {
     x: column,
@@ -308,6 +346,7 @@ export function getGameItemsByWall(wall: Wall, fullGameWidth: number): GameItem[
     let fullGameIndex1 = 0
     let fullGameIndex2 = 0
     let fullGameIndex3 = 0
+
     if (wall.type === 'horizontal') {
       const { x: node1X, y: node1Y } = getFullBoardNodeByNode(wall.topNode1)
       const { x: node2X, y: node2Y } = getFullBoardNodeByNode(wall.topNode2)

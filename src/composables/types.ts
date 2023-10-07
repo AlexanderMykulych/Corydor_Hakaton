@@ -11,6 +11,7 @@ type QuoridorGameState = {
   board: Board
   player1: Player
   player2: Player
+  activePlayer: 'player1' | 'player2',
 }
 
 type Player = {
@@ -48,6 +49,7 @@ type Board = {
   nodes: GameNode[]
   walls: Wall[]
   fakeWalls: Wall[]
+  fakeNodes: GameNode[]
 }
 
 type QuoridorConfig = {
@@ -61,6 +63,8 @@ type QuoridorConfig = {
 
 type PlayerConfig = {
   name: string
+  x: number
+  y: number
 }
 
 type TGameItem<TType extends string, TData> = {
