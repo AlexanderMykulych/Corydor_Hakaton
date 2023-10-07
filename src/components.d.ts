@@ -8,7 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Cell: typeof import('./components/Cell.vue')['default']
-    copy: typeof import('./components/JugNode copy.vue')['default']
     DefaultBoard: typeof import('./components/DefaultBoard.vue')['default']
     EmptyNode: typeof import('./components/EmptyNode.vue')['default']
     FakeJugNode: typeof import('./components/FakeJugNode.vue')['default']

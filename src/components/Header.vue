@@ -7,6 +7,9 @@ const { t } = useI18n()
 
 const quoridor = useQuoridor()
 
+console.log(quoridor.state.value.activePlayer);
+
+
 const timer10 = ref(true);
 const timer20 = ref(false);
 
@@ -50,9 +53,9 @@ const startTimer2 = () => {
 };
 
 startTimer1();
-// function show() {
-//   console.log(9, quoridor.state.value.player1.walls);
-// }
+function show() {
+  console.log(9, quoridor.state.value.activePlayer);
+}
 
 
 
@@ -65,7 +68,7 @@ watchEffect(() => {
 <template>
   <div>
     <div class="player1"> 
-    <p>
+    <p :class="{ 'player10': timer10 }">
       {{props.name.split('+')[0] }}{{quoridor.state.value.player1.walls}}
     </p>
 
@@ -83,7 +86,7 @@ watchEffect(() => {
 
   
     <div class="player2"> 
-    <p>
+    <p :class="{ 'player20': timer20 }">
       {{props.name.split('+')[1] }}
     </p>
 
@@ -104,12 +107,12 @@ watchEffect(() => {
       >
         {{ t('button.back') }}
       </button>
-      <button
+      <!-- <button
         m="3 t6" text-sm btn
         @click="startTimer"
       >
         s
-      </button>
+      </button> -->
     </div>
   </div>
 </template>
@@ -122,6 +125,14 @@ watchEffect(() => {
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+.player10 {
+ background-color: red;
+}
+
+.player20 {
+ background-color: green;
 }
 
 .player2 {

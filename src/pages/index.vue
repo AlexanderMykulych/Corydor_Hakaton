@@ -22,12 +22,9 @@ const { t } = useI18n()
 
 <template>
   <div>
-    <div text-4xl>
-      <div i-carbon-campsite inline-block />
+    <div text-4xl text-center flex justify-center align-center>
+      <img src="/logo.png" alt="logo" width="200"/>
     </div>
-    <p class="title">
-      {{ t('intro.logo') }}
-    </p>
 
     <div py-5 />
 

@@ -49,6 +49,6 @@ const emits = defineEmits<{
 
 .frog.isActive {
     background-image: url("https://flexboxfroggy.com/images/frog-red.svg");
-    animation: pulse 1s infinite;
+    animation: pulse 2s infinite;
 }
 </style>
