@@ -6,9 +6,12 @@ type QuoridorGameState = {
 
 }
 
-type User = {
-
+type Player = {
+  name: string
+  position: Node
+  walls: number
 }
+
 
 type Node = {
   x: number
@@ -32,11 +35,19 @@ type QuoridorConfig = {
     width: number
     height: number
   }
+  player1: PlayerConfig
+  player2: PlayerConfig
+}
+
+type PlayerConfig = {
+  name: string
 }
 
 export function useQuoridor(config: QuoridorConfig = getDefaultQuoridorConfig()): QuoridorGame {
   const quoridorState = ref<QuoridorGameState>({
-    
+    board: createBoard(config),
+    player1: createPlayer(config, config.player1),
+    player2: createPlayer(config, config.player1),
   })
 
 
@@ -44,9 +55,9 @@ export function useQuoridor(config: QuoridorConfig = getDefaultQuoridorConfig())
 
 export function createBoard(config: QuoridorConfig): Board {
   const nodes: Node[] = generateNodes(config)
-  
+
   return {
-    nodes: [],
+    nodes,
     walls: []
   }
 }
@@ -63,6 +74,23 @@ export function getDefaultQuoridorConfig(): QuoridorConfig {
     size: {
       width: 9,
       height: 9
+    },
+    player1: {
+      name: 'Player1'
+    },
+    player2: {
+      name: 'Player2'
     }
+  }
+}
+
+export function createPlayer(config: QuoridorConfig, playerConfig: PlayerConfig): Player {
+  return {
+    name: playerConfig.name,
+    position: {
+      x: Math.floor(config.size.width / 2),
+      y: 0
+    },
+    walls: 10
   }
 }
