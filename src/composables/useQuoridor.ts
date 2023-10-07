@@ -37,7 +37,7 @@ export function createBoard(config: QuoridorConfig): Board {
 
   return {
     nodes,
-    walls: generateTestWalls() ?? [],
+    walls: [],
     fakeWalls: [],
     fakeNodes: [],
   }
@@ -58,13 +58,13 @@ export function getDefaultQuoridorConfig(): QuoridorConfig {
     },
     player1: {
       name: 'Player1',
-      x: 4,
-      y: 5,
+      x: 5,
+      y: 1,
     },
     player2: {
       name: 'Player2',
-      x: 8,
-      y: 5,
+      x: 5,
+      y: 9,
     }
   }
 }
