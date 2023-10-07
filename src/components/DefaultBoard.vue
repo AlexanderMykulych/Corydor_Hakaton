@@ -25,8 +25,8 @@ const quoridor = useQuoridor()
   grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr;
   grid-column-gap: 0;
   grid-row-gap: 0;
-  width: 800px;
-  height: 800px;
+  width: min(80vw, 80vh);
+  height: min(80vw, 80vh);
 
   background: #1F5768;
   padding: 30px;

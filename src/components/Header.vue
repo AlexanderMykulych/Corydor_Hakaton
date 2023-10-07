@@ -68,7 +68,7 @@ watchEffect(() => {
 <template>
   <div>
     <div class="player1"> 
-    <p :class="{ 'player10': timer10 }">
+    <p >
       {{props.name.split('+')[0] }}{{quoridor.state.value.player1.walls}}
     </p>
 
@@ -86,7 +86,7 @@ watchEffect(() => {
 
   
     <div class="player2"> 
-    <p :class="{ 'player20': timer20 }">
+    <p >
       {{props.name.split('+')[1] }}
     </p>
 
