@@ -33,8 +33,6 @@ const emits = defineEmits<{
     background-repeat: no-repeat;
     width: 100%;
     height: 100%;
-
-    animation: pulse 0.5s infinite;
 }
 
 @keyframes pulse {
@@ -51,5 +49,6 @@ const emits = defineEmits<{
 
 .frog.isActive {
     background-image: url("https://flexboxfroggy.com/images/frog-red.svg");
+    animation: pulse 0.5s infinite;
 }
 </style>
