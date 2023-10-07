@@ -9,7 +9,6 @@
     "preview": "vite preview",
     "preview-https": "serve dist",
     "test": "vitest",
-    "test:e2e": "cypress open",
     "test:unit": "vitest",
     "typecheck": "vue-tsc --noEmit",
     "up": "taze major -I",
@@ -71,9 +70,6 @@
     "vite-ssg-sitemap": "^0.5.1",
     "vitest": "^0.34.5",
     "vue-tsc": "^1.8.15"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix"
